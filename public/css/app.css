@@ -1,0 +1,410 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    background-color: #fafafa;
+    color: #8C0000;
+    font-family: 'Epilogue', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    min-width: 320px; 
+    overflow-x: hidden; 
+}
+
+header {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    position: fixed;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 0.5em 1em;
+    z-index: 1000;
+    top: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    height: 70px; 
+}
+
+a {
+    color: #8C0000; 
+    text-decoration: none; 
+    transition: color 0.3s ease; 
+}
+
+a:hover {
+    color: #6b0000; 
+    text-decoration: underline; 
+}
+
+header h1 {
+    margin: 0;
+    width: 150px;
+    height: 50px;
+}
+
+header h1 img.logo {
+    width: 100%; 
+    height: auto;
+    display: block;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+
+.user-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-dropdown .user-icon{
+    font-size: 1.5em;
+    color: #8C0000;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.3s;
+}
+
+.user-dropdown .user-icon:hover {
+    transform: scale(1.1);
+    color: #6b0000;
+}
+
+.user-dropdown .dropdown-content {
+    display: none; 
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.user-dropdown .dropdown-content p {
+    margin: 0 0 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.user-dropdown .dropdown-content a {
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+    color: #8C0000;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.user-dropdown .dropdown-content a:hover {
+    color: #6b0000;
+}
+
+.user-dropdown .dropdown-content .logout-link {
+    color: #d9534f;
+    font-weight: bold;
+}
+
+.user-dropdown .dropdown-content hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+
+.notifications-dropdown {
+    position: relative; 
+    margin-left: 20px; 
+    cursor: pointer;
+}
+
+.notifications-dropdown .notifications-icon {
+    font-size: 1.5em;
+    color: #8C0000;
+    position: relative;
+    transition: transform 0.2s, color 0.3s;
+}
+
+.notifications-dropdown .notifications-icon:hover {
+    transform: scale(1.1);
+    color: #6b0000;
+}
+
+.notifications-dropdown .badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #d9534f;
+    color: white;
+    font-size: 0.8em;
+    border-radius: 50%;
+    padding: 3px 7px;
+}
+
+.notifications-dropdown .dropdown-content {
+    display: none; 
+    position: absolute;
+    top: 40px; 
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px; 
+    z-index: 1000;
+    padding: 10px;
+    max-height: 300px; 
+    overflow-y: auto; 
+}
+
+.notifications-dropdown .dropdown-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notifications-dropdown .dropdown-content li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.notifications-dropdown .dropdown-content li:last-child {
+    border-bottom: none;
+}
+
+.notifications-dropdown .dropdown-content li:hover {
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+
+.notifications-dropdown .dropdown-content p {
+    margin: 0;
+    text-align: center;
+    color: #999;
+    font-size: 0.9em;
+}
+
+main {
+    padding-top: 110px; 
+}
+
+#content {
+    padding: 20px;
+    padding-bottom: 50px;
+}
+
+button, a.button {
+    background-color: #8C0000;
+    border-color: #8C0000;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+}
+
+button:hover, a.button:hover {
+    background-color: #6b0000;
+}
+
+a.button.button-outline {
+    background-color: transparent;
+    color: #8C0000;
+    border: 2px solid #8C0000;
+}
+
+a.button.button-outline:hover {
+    background-color: #8C0000;
+    color: #fff;
+}
+
+#everywhere_footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #8C0000;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 900;
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-item {
+    margin-right: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    font-size: 0.9em;
+}
+
+
+#cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    padding: 20px;
+}
+
+#cards article.card {
+    background-color: #d3edc3;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#cards article.card:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#cards article.card header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#cards article.card header h2 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+@media (max-width: 70em) { 
+    #cards {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+
+@media (max-width: 40em) { 
+    #cards {
+        grid-template-columns: 1fr; 
+    }
+}
+
+.search-form {
+    display: flex;
+    align-items: center; 
+    gap: 8px; 
+    height: 40px; 
+    margin: 0; 
+    margin-top: 10px; 
+}
+
+img{
+    margin-top: 5px;
+}
+
+/* Input Field */
+.search-input {
+    flex: 1; 
+    font-size: 1em; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    height: 100%; 
+    outline: none; 
+    transition: border-color 0.3s ease;
+    margin-top: 5px;
+}
+
+.search-input:focus {
+    border-color: #8C0000; 
+}
+
+.search-button {
+    background-color: transparent; 
+    border: none; 
+    cursor: pointer; 
+    padding: 0 10px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    height: 100%; 
+}
+
+.search-button i {
+    font-size: 1.2em; 
+    color: #8C0000; 
+    transition: color 0.3s ease;
+}
+
+.search-button:hover i {
+    color: white; 
+}
+
+.custom-tooltip {
+    position: absolute;
+    background: black;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    z-index: 1000;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
+
+.modal-dialog {
+    position: relative;
+    margin: 5% auto; 
+    padding: 1rem;
+    max-width: 90%; 
+    width: 500px; 
+    box-sizing: border-box; 
+    background-color: white;
+    border-radius: 8px;
+}
+
+@media (max-width: 40em) { 
+    .modal-dialog {
+        max-width: 90%; 
+        padding: 0.8rem; 
+    }
+}
+
+
+.notification-item {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification-item.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+}

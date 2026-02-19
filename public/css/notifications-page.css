@@ -1,0 +1,17 @@
+#mark-read{
+    background-color: #8c0000;
+    border: none; 
+    outline: none; 
+    box-shadow: none;
+}
+
+#mark-read:hover{
+    transform: scale(1.1);
+    background-color: #6b0000;
+}
+
+
+#mark-read:focus {
+    outline: none; 
+    box-shadow: none; 
+}

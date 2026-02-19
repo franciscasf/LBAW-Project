@@ -1,0 +1,62 @@
+ table{
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 20px 0; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table table th {
+    background-color: #f4f4f4; 
+    border-bottom: 2px solid #ddd; 
+    font-weight: bold; 
+    padding: 10px 15px; 
+    text-align: left; 
+}
+
+table tr:hover {
+    background-color: #f1f1f1; 
+    transform: scale(1.05); 
+}
+
+
+table td {
+    border-bottom: 1px solid #ddd; 
+    padding: 10px 15px;
+}
+
+#tag td{
+    vertical-align: middle;
+    padding-left: 5px;
+}
+
+#delete{
+    background-color: #8c0000;
+    outline: none;
+    border: none;
+}
+
+#delete:hover{
+    background-color: #b30000;
+    transform: scale(1.1);
+}
+
+#edit{
+    background-color: #626262;
+    outline: none;
+    border: none;
+}
+
+#edit:hover{
+    background-color: #4d4d4d;
+    transform: scale(1.1);
+}
+
+#manage-tags {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table th {
+    padding-left: 5px;
+}

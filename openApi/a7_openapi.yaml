@@ -1,0 +1,580 @@
+openapi: 3.0.0
+
+info:
+  version: '1.0'
+  title: 'Ask_LEIC Web API'
+  description: 'Web Resources Specification (A7) for ask_LEIC'
+
+servers:
+- url: http://localhost:8001/ #http://lbaw.fe.up.pt #MUDAR
+  description: Production server
+
+externalDocs:
+  description: Find more info here.
+  url: https://gitlab.up.pt/lbaw/lbaw2425/lbaw2434/-/wikis/EAP:-Arquitecture-
+
+tags:
+  - name: 'M01: Authentication and Individual Profile'
+  - name: 'M02: Users'
+  - name: 'M03: Questions'
+  - name: 'M04: Answers'
+  - name: 'M05: Search'
+  - name: 'M06: User Administration and Static Pages'
+  
+paths:
+
+  /login:
+    get:
+      operationId: R101
+      summary: 'R101: Login Form'
+      description: 'Provide the login form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Login form displayed successfully.'
+        '500':
+          description: 'Internal server error while loading the login form.'
+
+    post:
+      operationId: R102
+      summary: 'R102: Login Action'
+      description: 'Processes the login form submission and authenticates the user. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: 'The user’s email address.'
+                password:
+                  type: string
+                  format: password
+                  description: 'The user’s password.'
+              required:
+                - email
+                - password
+      responses:
+        '302':
+          description: 'Successful authentication. Redirect to user profile.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                RedirectToProfile:
+                  description: 'Redirect to the authenticated user’s profile.'
+                  value: '/users/{id}'
+        '400':
+          description: 'Bad request (e.g., missing or invalid credentials).'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Invalid email format or missing parameters.'
+        '401':
+          description: 'Unauthorized. Invalid email or password.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Authentication failed. Please check your credentials.'
+        '403':
+          description: 'Forbidden. User account is disabled or banned.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Your account has been disabled. Please contact support.'
+        '500':
+          description: 'Internal server error during login attempt.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'An unexpected error occurred. Please try again later.'
+ 
+  /logout:
+
+    post:
+      operationId: R103
+      summary: 'R103: Logout Action'
+      description: 'Logout the current authenticated used. Access: USR, ADM, MOD'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to login form.'
+                  value: '/login'
+
+  /register:
+    get:
+      operationId: R104
+      summary: 'R104: Register Form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+      responses:
+        '200':
+          description: 'Ok. Show sign-up UI'
+
+    post:
+      operationId: R105
+      summary: 'R105: Register Action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication and Individual Profile'
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                picture:
+                  type: string
+                  format: binary
+              required:
+                - email
+                - password
+
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to user profile.'
+                  value: '/users/{id}'
+                302Failure:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
+
+  /users/{id}:
+    get:
+      operationId: R201
+      summary: 'R201: View user profile'
+      description: 'Show the individual user profile. Access: USR'
+      tags:
+        - 'M02: Users'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok. Show view profile UI'
+        '404':
+          description: 'User not found.'
+
+    patch:
+      operationId: R202
+      summary: 'R202: Update User Profile'
+      description: 'Update user profile information. Access: ADM or OWN.'
+      tags:
+        - 'M02: Users'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The user’s updated name.'
+                email:
+                  type: string
+                  format: email
+                  description: 'The user’s updated email.'
+              required:
+                - name
+                - email
+      responses:
+        '200':
+          description: 'User updated successfully.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: string
+        '403':
+          description: 'Forbidden. User cannot update this profile.'
+        '404':
+          description: 'User not found.'
+
+    delete:
+      operationId: R203
+      summary: 'R203: Delete a User'
+      description: 'Deletes a user from the platform by their ID. Access: ADM or OWN.'
+      tags:
+        - 'M02: Users'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the user to delete.'
+      responses:
+        '204':
+          description: 'User deleted successfully. No content returned.'
+        '400':
+          description: 'Invalid request (e.g., missing or invalid ID).'
+        '403':
+          description: 'Permission denied (e.g., not an administrator or the user themselves).'
+        '404':
+          description: 'User not found.'
+
+  /questions:
+      get:
+        operationId: R301
+        summary: 'R301: List Questions'
+        description: 'Retrieve a list of questions posted on the platform. Access: PUB'
+        tags:
+          - 'M03: Questions'
+        parameters:
+          - in: query
+            name: tag
+            schema:
+              type: string
+            required: false
+            description: 'Filter questions by tag.'
+        responses:
+          '200':
+            description: 'List of questions retrieved successfully.'
+          '400':
+            description: 'Invalid request.'
+      post:
+          operationId: R302
+          summary: 'R302: Post a Question'
+          description: 'Allows authenticated users to post a new question. Access: USR'
+          tags:
+            - 'M03: Questions'
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    content:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                    - title
+                    - content
+          responses:
+            '201':
+              description: 'Question posted successfully.'
+            '403':
+              description: 'Unauthorized action.'
+      
+  /questions/{id}:
+    get:
+      operationId: R303
+      summary: 'R303: View Question'
+      description: 'View the details of a specific question. Access: PUB'
+      tags:
+        - 'M03: Questions'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'ID of the question to retrieve.'
+      responses:
+        '200':
+          description: 'Question retrieved successfully.'
+        '404':
+          description: 'Question not found.'
+
+    delete:
+      operationId: R304
+      summary: 'R304: Delete a Question'
+      description: 'Deletes a question from the platform by its ID. Access: ADM, MOD, OWN'
+      tags:
+        - 'M03: Questions'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'The unique identifier of the question to delete.'
+      responses:
+        '204':
+          description: 'Question deleted successfully. No content returned.'
+        '400':
+          description: 'Invalid request (e.g., missing ID).'
+        '404':
+          description: 'Question not found.'
+        '403':
+          description: 'Permission denied (e.g., user lacks ADM role).'
+
+    patch:
+      operationId: R305
+      summary: 'R305: Edit a Question'
+      description: 'Update one or more fields of a specific question. Access: OWN, ADM'
+      tags:
+        - 'M03: Questions'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'ID of the question to update.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'Updated title of the question.'
+                content:
+                  type: string
+                  description: 'Updated content of the question.'
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: 'Updated tags associated with the question.'
+              example:
+                title: "Updated Question Title"
+                content: "Updated question details here."
+                tags: ["updated-tag"]
+      responses:
+        '200':
+          description: 'Question updated successfully.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  content:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                  lastUpdated:
+                    type: string
+                    format: date-time
+                  message:
+                    type: string
+                    example: "Question updated successfully."
+        '400':
+          description: 'Invalid request.'
+        '404':
+          description: 'Question not found.'
+        '403':
+          description: 'Permission denied.'
+
+
+  /answers:
+    post:
+      operationId: R401
+      summary: 'R401: Post an Answer'
+      description: 'Allows authenticated users to post an answer to a question. Access: USR'
+      tags:
+        - 'M04: Answers'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                question_id:
+                  type: integer
+              required:
+                - content
+                - question_id
+      responses:
+        '201':
+          description: 'Answer posted successfully.'
+        '403':
+          description: 'Unauthorized action.'
+
+  /answers/{id}:
+    delete:
+      operationId: R402
+      summary: 'R402: Delete an Answer'
+      description: 'Allows authenticated users to delete their own answers. Access: USR. Admin users can delete any answer.'
+      tags:
+        - 'M04: Answers'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'ID of the answer to delete.'
+      responses:
+        '204':
+          description: 'Answer deleted successfully. No content returned.'
+        '403':
+          description: 'Unauthorized action (user does not have permission to delete this answer).'
+        '404':
+          description: 'Answer not found.'
+        '401':
+          description: 'User not authenticated.'
+
+    patch:
+      operationId: R403
+      summary: 'R403: Edit an Answer'
+      description: 'Allows authenticated users to edit their own answers. Admin users can edit any answer.'
+      tags:
+        - 'M04: Answers'
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'ID of the answer to edit.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+              required:
+                - content
+      responses:
+        '200':
+          description: 'Answer edited successfully.'
+        '400':
+          description: 'Invalid request (e.g., missing content).'
+        '403':
+          description: 'Unauthorized action (user does not have permission to edit this answer).'
+        '404':
+          description: 'Answer not found.'
+        '401':
+          description: 'User not authenticated.'
+
+  /search:
+    get:
+      operationId: R501
+      summary: 'R501: General Search'
+      description: 'Search across different questions and users, based on keywords. Access: PUB'
+      tags:
+        - 'M05: Search'
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+          required: true
+          description: 'Search term to filter results.'
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum: [questions, users]
+          required: false
+          description: 'Type of content to search for (e.g., questions or users). Defaults to all types if omitted.'
+      responses:
+        '200':
+          description: 'Search results returned successfully.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                    example:
+                      - id: 1
+                        type: 'question'
+                        title: 'How to use Laravel?'
+                        content: 'Looking for tips on Laravel setup.'
+                      - id: 2
+                        type: 'user'
+                        name: 'John Doe'
+                        email: 'john.doe@example.com'
+        '400':
+          description: 'Invalid search term.'
+        '404':
+          description: 'No results found for the given search term.'
+
+  /admin/users:
+    get:
+      operationId: R601
+      summary: 'R601: List Users'
+      description: 'Retrieve a list of all users. Access: ADM'
+      tags:
+        - 'M06: User Administration and Static Pages'
+      responses:
+        '200':
+          description: 'List of users retrieved successfully.'
+        '403':
+          description: 'Unauthorized access.'

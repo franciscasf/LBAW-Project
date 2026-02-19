@@ -1,0 +1,73 @@
+#newUserButton,#deleteButton{
+    background-color: #8c0000;
+    outline: none;
+    border: none;
+}
+
+#newUserButton:hover,#deleteButton:hover{
+    background-color: #b30000;
+    transform: scale(1.1);
+}
+
+#editProfileButton{
+    background-color: #626262;
+    outline: none;
+    border: none;
+}
+
+#editProfileButton:hover{
+    background-color: #4d4d4d;
+    transform: scale(1.1);
+}
+
+#unblockButton{
+    background-color: #008000;
+    outline: none;
+    border: none;
+}
+
+#blockButton{
+    background-color: #401313;
+    outline: none;
+    border: none;
+}
+
+#unblockButton:hover,#blockButton:hover{
+    transform: scale(1.1);
+}
+
+#userRow td{
+    vertical-align: middle;
+    padding-left: 5px;
+}
+
+
+table{
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 20px 0; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+}
+
+/* Table Headers */
+.table table th {
+    background-color: #f4f4f4; 
+    border-bottom: 2px solid #ddd; 
+    font-weight: bold;
+    padding: 10px 15px; 
+    text-align: left; 
+}
+
+/* Table Rows */
+
+table tr:hover {
+    background-color: #f1f1f1; 
+    transform: scale(1.05); 
+}
+
+
+table td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 15px; 
+}
+
