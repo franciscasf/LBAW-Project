@@ -1,4 +1,4 @@
-# lbaw2434
+# Database and Web Applications Laboratory Course Project 2024/2025
 
 ## Context
 AskLEIC is a **group project** developed for the **Database and Web Applications Laboratory** course.  
