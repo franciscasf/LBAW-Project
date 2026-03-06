@@ -1,6 +1,9 @@
 # lbaw2434
 
-# AskLEIC: A Platform for Collaboration and Learning
+## Context
+AskLEIC is a **group project** developed for the **Database and Web Applications Laboratory** course.  
+
+## AskLEIC: A Platform for Collaboration and Learning
 AskLEIC is a web-based platform designed to enhance collaboration and knowledge sharing within the Licenciatura em Engenharia Informática e Computação (LEIC) community. Tailored for students and staff, AskLEIC aims to bridge gaps in communication, foster academic discussions, and simplify access to valuable resources.
 
 Through AskLEIC, users can ask questions about academic subjects, share learning materials, and solve challenges collaboratively. The platform promotes interaction between students and teachers, creating a vibrant and supportive educational environment.
@@ -9,16 +12,6 @@ To ensure a secure and organized experience, AskLEIC features role-based access 
 
 With a user-friendly interface and an adaptive design, AskLEIC ensures seamless navigation across devices, providing an exceptional user experience for the entire LEIC community. This project not only addresses academic needs but also fosters a spirit of collaboration and mutual growth, making it an invaluable tool for the LEIC journey.
 
-## Project Components
-
-* [ER: Requirements Specification](https://gitlab.up.pt/lbaw/lbaw2425/lbaw2434/-/wikis/ER:-Requirements-Specification)
-* [EBD: Database Specification](https://gitlab.up.pt/lbaw/lbaw2425/lbaw2434/-/wikis/EBD:-Database-Specification)
-* [EAP: Architecture Specification and Prototypes](https://gitlab.up.pt/lbaw/lbaw2425/lbaw2434/-/wikis/EAP:-Arquitecture-Specification)
-* [PA: Product and Presentation](https://gitlab.up.pt/lbaw/lbaw2425/lbaw2434/-/wikis/PA:-Product-and-Presentation)
-
-## Checklists
-
-The artefacts checklist is available at: https://docs.google.com/spreadsheets/d/1TyKOAtIRPEusYvrm1aGqBPtD0TtnJSGo4N0o4woQBFw/edit?gid=537406521#gid=537406521
 
 ## Product
 
@@ -31,8 +24,6 @@ docker run -d --name lbaw2434 -p 8001:80 gitlab.up.pt:5050/lbaw/lbaw2425/lbaw243
 ### Credentials
 
 #### 2.1. Administration Credentials
-
-
 
 | Username | Email | Password |
 |----------|-------|----------|
